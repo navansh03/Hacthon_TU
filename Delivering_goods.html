@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta charset="UTF-8"> 
+    <title>University Urgency Delivery</title> 
+    <style> 
+      body { 
+        background-color: black; 
+        color: white; 
+        font-family: Arial, sans-serif; 
+      } 
+      #header { 
+        display: flex; 
+        align-items: center; 
+        padding: 20px; 
+      } 
+      #header img { 
+        width: 50px; 
+        height: 50px; 
+        margin-right: 20px; 
+      } 
+      #header h1 { 
+        font-size: 28px; 
+        font-weight: bold; 
+      } 
+      #map { 
+        height: 300px; 
+        width: 100%; 
+        margin-top: 20px; 
+      } 
+      h2 { 
+        font-size: 24px; 
+        font-weight: bold; 
+        margin-top: 40px; 
+      } 
+      table { 
+        width: 100%; 
+        margin-top: 20px; 
+        border-collapse: collapse; 
+      } 
+      th, td { 
+        padding: 10px; 
+        border-bottom: 1px solid white; 
+      } 
+    </style> 
+  </head> 
+  <body> 
+    <div id="header"> 
+      <img src="logo.jpg" alt="University Urgency Logo"> 
+      <h1>UNIVERSITY URGENCY (UU)</h1> 
+    </div> 
+    <div id="map"></div> 
+    <h1>Delivery goods</h1> 
+    <table> 
+      <thead> 
+        <tr> 
+          <th>Product</th> 
+          <th>Location</th> 
+        </tr> 
+      </thead> 
+      <tbody id="productList"> 
+        <!-- Products will be added here via JavaScript --> 
+      </tbody> 
+    </table> 
+    <script 
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" 
+      async defer 
+    ></script> 
+    <script> 
+      let map; 
+      let userLocation; 
+
+      function initMap() { 
+        map = new google.maps.Map(document.getElementById("map"), { 
+          zoom: 12 
+        }); 
+        getUserLocation(); 
+      } 
+
+      function getUserLocation() { 
+        if (navigator.geolocation) { 
+          navigator.geolocation.getCurrentPosition( 
+            function(position) { 
+              userLocation = { 
+                lat: position.coords.latitude, 
+                lng: position.coords.longitude 
+              }; 
+              map.setCenter(userLocation); 
+              getProducts(); 
+            },
